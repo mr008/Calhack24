@@ -51,7 +51,7 @@ def process_image(image_path,image_id):
             ],
             "model": "meta-llama/Llama-3.2-90B-Vision-Instruct",
             "max_tokens": 512,
-            "temperature": 0.7,
+            "temperature": 0.5,
             "top_p": 0.9,
         }
         response = requests.post(api, headers=headers, json=payload)
@@ -60,7 +60,7 @@ def process_image(image_path,image_id):
         if response.status_code == 200:
             result = response.json()
             description = result["choices"][0]["message"]["content"]
-            print(description)
+            print("imageid: ",image_id, " : ",description)
             collection.add(
                 ids=[image_id],
                 documents=[description]
@@ -78,7 +78,7 @@ for filename in os.listdir(folder_path):
         image_path = os.path.join(folder_path, filename)
         process_image(image_path,filename)
 
-print(collection.query(query_texts='gothic event', n_results=1))
+print(collection.query(query_texts='gothic event', n_results=2))
 '''
 image_path = "./clothes/aoedaohdeaoeu.jpg"
 process_image(image_path)
