@@ -2,6 +2,7 @@ import base64
 import requests
 from io import BytesIO
 from PIL import Image
+import chromadb
 
 
 def encode_image(img):
@@ -42,5 +43,13 @@ payload = {
     "top_p": 0.9,
 }
 
+chroma_client = chromadb.Client()
+collection = chroma_client.create_collection(name="my_collection")
+
+
+
+
+
 response = requests.post(api, headers=headers, json=payload)
 print(response.json())
+
