@@ -91,6 +91,10 @@ if __name__ == "__main__":
     # Process all images in the folder and add to the collection
     process_all_images()
 
+    # ADD AN ADDITIONAL IMAGE
+    #file_name = os.path.basename(file_path)
+    #process_image(file_path,file_name)
+
     while True:
         # Query the collection based on the user input
         userinput = input("Enter your search query (e.g., 'gothic style'): ")
