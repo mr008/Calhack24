@@ -85,6 +85,47 @@ def query_collection(userinput):
     results = collection.query(query_texts=[userinput], n_results=2)
     print("Query Results:", results)
 
+def output_image_description:
+    # Function to process and send the image to the API
+def process_image(image_path, image_id):
+    try:
+        img = Image.open(image_path)
+        base64_img = encode_image(img)
+        payload = {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "What is this wardrobe item? Give me description of itself, its style and how can you pair it. Ignore the background and other irrelevant information. Limit the word to 50 words and make sure the descriptions are in a single not segmented text paragraph."
+                        },
+                        {
+                            "type": "image_url",
+                            "image_url": {"url": f"data:image/jpeg;base64,{base64_img}"},
+                        },
+                    ],
+                }
+            ],
+            "model": "meta-llama/Llama-3.2-90B-Vision-Instruct",
+            "max_tokens": 512,
+            "temperature": 0.5,
+            "top_p": 0.9,
+        }
+        response = requests.post(api, headers=headers, json=payload)
+
+        # Print the response
+        if response.status_code == 200:
+            result = response.json()
+            description = result["choices"][0]["message"]["content"]
+            print("imageid: ", image_id, " : ", description)
+        else:
+            print(f"Error processing {image_path}: {response.status_code} - {response.text}")
+
+    except Exception as e:
+        print(f"Error opening or processing {image_path}: {str(e)}")
+
+
 # Main execution flow
 if __name__ == "__main__":
     
