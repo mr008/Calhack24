@@ -73,12 +73,12 @@ def process_image(image_path,image_id):
 
 # Iterate over all files in the clothes folder
 
-for index, filename in enumerate(os.listdir(folder_path)):
+for filename in os.listdir(folder_path):
     if filename.endswith((".jpg", ".jpeg", ".png")):  # Filter image files
         image_path = os.path.join(folder_path, filename)
-        process_image(image_path,str(index))
+        process_image(image_path,filename)
 
-print(collection.query(query_texts='bright color', n_results=1))
+print(collection.query(query_texts='gothic event', n_results=1))
 '''
 image_path = "./clothes/aoedaohdeaoeu.jpg"
 process_image(image_path)
