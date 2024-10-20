@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image
 import os
 import chromadb
+from pinscrape import pinscrape
 
 def encode_image(img):
     buffered = BytesIO()
@@ -78,7 +79,18 @@ for filename in os.listdir(folder_path):
         image_path = os.path.join(folder_path, filename)
         process_image(image_path,filename)
 
-print(collection.query(query_texts='gothic event', n_results=2))
+userinput="gothic style"
+print(collection.query(query_texts=userinput, n_results=2))
+
+#the scriper function that fetch the pinterest photos
+details = pinscrape.scraper.scrape(userinput, "./psoutput",{} ,5 , 20)
+if details["isDownloaded"]:
+    print("\nDownloading completed !!")
+    print(f"\nTotal urls found: {len(details['extracted_urls'])}")
+    print(f"\nTotal images downloaded (including duplicate images): {len(details['urls_list'])}")
+else:
+    print("\nNothing to download !!", details)
+
 '''
 image_path = "./clothes/aoedaohdeaoeu.jpg"
 process_image(image_path)
